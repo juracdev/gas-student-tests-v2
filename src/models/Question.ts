@@ -4,7 +4,7 @@ export interface Question {
   questText: string;
 
   /* text */
-  answerText?: string;
+  correctAnsText?: string;
   keys?: string[];
   isKeysOrdered?: boolean;
 
@@ -15,7 +15,7 @@ export interface Question {
   /* grid */
   gridLeftVariants?: string[];
   gridRightVariants?: string[];
-  gridAnswersIdx?: GridAnswers;
+  gridAnswers?: GridAnswers;
 }
 
 export enum QuestionType {

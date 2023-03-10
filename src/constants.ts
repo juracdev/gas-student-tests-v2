@@ -9,4 +9,6 @@ export const CONSTANTS = {
   GRID_ANSWER_PAIR_DELIMITER: ';',
 
   CHOICE_VARS_NUMERATORS: ['а', 'б', 'в', 'г', 'д', 'е', 'ё'],
+
+  SHEET_ANSWER_NAME: 'Ответы на форму',
 };

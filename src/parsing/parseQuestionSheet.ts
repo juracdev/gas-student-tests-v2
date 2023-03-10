@@ -41,14 +41,14 @@ export function parseQuestionSheet(sheetId?: string): Question[] {
 
     /*  text */
     if (type === QuestionType.text) {
-      question.answerText = clearStringSpaces(ansCell);
+      question.correctAnsText = clearStringSpaces(ansCell);
       question.keys = keysCell.split(CONSTANTS.CHOICE_VARIANTS_DELIMITER).map((x) => clearStringSpaces(x));
       question.isKeysOrdered = isKeysOrderedCell.trim().toLowerCase() === 'да';
     }
 
     /*  grid */
     if (type === QuestionType.grid) {
-      question.gridAnswersIdx = parseGridAnswers(ansCell);
+      question.gridAnswers = parseGridAnswers(ansCell);
       const { left, right } = parseGridVariants(variantsCell);
       question.gridLeftVariants = left;
       question.gridRightVariants = right;
@@ -63,8 +63,6 @@ export function parseQuestionSheet(sheetId?: string): Question[] {
 function parseGridAnswers(ansCell: string): GridAnswers {
   const result: GridAnswers = {};
   const pairs = ansCell.split(CONSTANTS.GRID_ANSWER_PAIR_DELIMITER);
-
-  console.log(pairs);
 
   pairs.forEach((pair) => {
     const [left, right] = pair.split(CONSTANTS.GRID_ANSWER_PAIR_LINK).map((x) => Number(x) - 1);
