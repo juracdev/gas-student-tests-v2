@@ -1,5 +1,5 @@
 import { CONSTANTS } from '../constants';
-import { GridAnswers, Question, QuestionType, questionTypesMap } from '../models/Question';
+import { GridAnswers, Question, QuestionType, questionTypesMap, TextQuestionKey } from '../models/Question';
 import { clearStringSpaces } from '../utils/stringUtils';
 
 export function parseQuestionSheet(sheetId?: string): Question[] {
@@ -42,7 +42,7 @@ export function parseQuestionSheet(sheetId?: string): Question[] {
     /*  text */
     if (type === QuestionType.text) {
       question.correctAnsText = clearStringSpaces(ansCell);
-      question.keys = keysCell.split(CONSTANTS.CHOICE_VARIANTS_DELIMITER).map((x) => clearStringSpaces(x));
+      question.keys = parseTextKeys(keysCell);
       question.isKeysOrdered = isKeysOrderedCell.trim().toLowerCase() === 'да';
     }
 
@@ -82,4 +82,19 @@ function parseGridVariants(varCell: string): ParsedGridVariants {
   const [left, right] = colStrings!.map((col) => col.split(CONSTANTS.CHOICE_VARIANTS_DELIMITER).map((v) => v.trim()));
 
   return { left, right };
+}
+
+function parseTextKeys(keysCell: string): TextQuestionKey[] {
+  const keyStrings = keysCell.split(CONSTANTS.CHOICE_VARIANTS_DELIMITER).map((x) => clearStringSpaces(x));
+
+  return keyStrings.map((keyStr) => {
+    const isMultipleKeys = /\[.+\]/.test(keyStr);
+    const values = isMultipleKeys
+      ? keyStr.split(CONSTANTS.CHOICE_OPTIONS_DELIMITER).map((k) => k.trim().replace(/[\[\]]/g, ''))
+      : [keyStr];
+
+    return {
+      values,
+    };
+  });
 }

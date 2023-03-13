@@ -1,3 +1,7 @@
+export interface TextQuestionKey {
+  values: string[];
+}
+
 export interface Question {
   number: number;
   type: QuestionType;
@@ -5,7 +9,7 @@ export interface Question {
 
   /* text */
   correctAnsText?: string;
-  keys?: string[];
+  keys?: TextQuestionKey[];
   isKeysOrdered?: boolean;
 
   /*  ch & multiCh */
@@ -29,7 +33,7 @@ export const questionTypesMap = {
   текст: QuestionType.text,
   'множ выбор': QuestionType.multiChoice,
   сетка: QuestionType.grid,
-  ch: QuestionType.choice,
+  выбор: QuestionType.choice,
 };
 
 export interface GridAnswers {

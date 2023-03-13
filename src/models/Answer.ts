@@ -1,7 +1,9 @@
+import { CheckedResult } from './CheckedResult';
 import { GridAnswers, Question } from './Question';
 
 export interface Answer {
   quest: Question;
+  checkedResult?: CheckedResult;
 
   /*  text */
   givenText?: string;
