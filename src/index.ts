@@ -1,4 +1,5 @@
-import { checkAnswer } from './answer-checking/checkAnswer';
+import { calculateTestsStats } from './answer-checking/calculateTestsStats';
+import { checkTestResults } from './answer-checking/checkAnswers';
 import { parseAnswerSheet } from './parsing/parseAnswerSheet';
 import { parseQuestionSheet } from './parsing/parseQuestionSheet';
 import { generateTestForm } from './test-generation/generateTestForm';
@@ -10,11 +11,12 @@ function generateForm() {
   generateTestForm(questions);
 }
 
-function checkAnswers() {
+function checkAns() {
   const questions = parseQuestionSheet();
-  const testResult = parseAnswerSheet(questions);
+  const testResults = parseAnswerSheet(questions);
 
-  checkAnswer(testResult[0].answers);
+  checkTestResults(testResults);
+  calculateTestsStats(testResults);
 
-  console.log(JSON.stringify(testResult[0]));
+  console.log(JSON.stringify(testResults));
 }

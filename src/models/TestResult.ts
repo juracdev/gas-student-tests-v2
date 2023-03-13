@@ -5,4 +5,11 @@ export interface TestResult {
   studentLastname: string;
 
   answers: Answer[];
+  stats?: TestResultStats;
+}
+
+export interface TestResultStats {
+  correctAnsAmount: number;
+  incorrectAnsAmount: number;
+  percentage: number;
 }
