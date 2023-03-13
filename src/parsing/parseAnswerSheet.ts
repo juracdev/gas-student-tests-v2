@@ -8,14 +8,15 @@ export function parseAnswerSheet(questions: Question[], sheetName?: string): Tes
   const testResults: TestResult[] = [];
   const ansSheet = SpreadsheetApp.getActive().getSheetByName(sheetName || CONSTANTS.SHEET_ANSWER_NAME);
 
-  const [titlesRow, ...answersRows] = ansSheet!.getDataRange().getValues();
-  const questTitles = titlesRow.slice(1);
-  const answersRow = answersRows.map((row) => row.slice(1));
+  const [titlesRow, ...rows] = ansSheet!.getDataRange().getValues();
+  const questTitles = titlesRow.slice(CONSTANTS.COLS_BEFORE_ANSWERS);
 
-  answersRow.forEach((ansRow) => {
+  rows.forEach((row) => {
+    const [timestamp, lastname, firstname, ...ansRow] = row;
+
     const testResult: TestResult = {
-      studentFirstname: 'FN',
-      studentLastname: 'LN',
+      studentFirstname: firstname,
+      studentLastname: lastname,
       answers: [],
     };
 

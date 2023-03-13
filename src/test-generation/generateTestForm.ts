@@ -1,8 +1,17 @@
 import { CONSTANTS } from '../constants';
 import { Question, QuestionType } from '../models/Question';
 
+function addCredentialsQuestions(form: GoogleAppsScript.Forms.Form) {
+  const lnItem = form.addTextItem();
+  lnItem.setTitle('Укажите Вашу фамилию').setRequired(true);
+  const fnItem = form.addTextItem();
+  fnItem.setTitle('Укажите Ваше имя').setRequired(true);
+}
+
 export function generateTestForm(questions: Question[]) {
   const form = FormApp.create('test-form');
+
+  addCredentialsQuestions(form);
 
   questions.forEach((q) => {
     const qText = `${q.number}. ${q.questText}`;

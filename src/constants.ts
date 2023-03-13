@@ -12,4 +12,7 @@ export const CONSTANTS = {
   CHOICE_VARS_NUMERATORS: ['а', 'б', 'в', 'г', 'д', 'е', 'ё'],
 
   SHEET_ANSWER_NAME: 'Ответы на форму',
+
+  /*  Кол-во колонок слева от колонок с вопросами (время, имя, фамилия) */
+  COLS_BEFORE_ANSWERS: 3,
 };
