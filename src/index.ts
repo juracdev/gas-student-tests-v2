@@ -38,20 +38,43 @@ function parseDocument(docId: string) {
   generateQuestionsSheet(questions);
 }
 
-function createQuestionsDoc(docIds: string[], outputDocId: string) {
-  let combinedQuesions: Question[] = [];
+type GroupedQuestion = Question & {
+  groupIdx?: number;
+  groupQuestNum?: number;
+};
 
-  docIds.forEach((docId) => {
+function createQuestionsDoc(docIds: string[], outputDocId: string) {
+  let combinedQuesions: GroupedQuestion[] = [];
+
+  docIds.forEach((docId, docIdx) => {
     const doc = DocumentApp.openById(docId);
     const body = doc.getBody();
 
-    const questions = parseDocumentQuestions(body);
+    let questions: GroupedQuestion[] = parseDocumentQuestions(body);
     parseDocumentAnswers(body, questions);
+
+    questions = questions.map((q) => ({ ...q, groupIdx: docIdx }));
 
     combinedQuesions.push(...questions);
   });
 
-  combinedQuesions =  combinedQuesions.sort(() => Math.random() - 0.5);
+  combinedQuesions = combinedQuesions.map((q, idx) => ({ ...q, groupQuestNum: idx + 1 }));
+
+  combinedQuesions = combinedQuesions.sort(() => Math.random() - 0.5);
+
+  const groupsNums: number[][] = [];
+
+  for (let i = 0; i < docIds.length; i++) {
+    groupsNums.push([]);
+  }
+
+  combinedQuesions.forEach(quest => {
+    const grIdx = quest.groupIdx!;
+    groupsNums[grIdx].push(quest.groupQuestNum!);
+    console.log(quest);
+  });
+
+ console.log(JSON.stringify(groupsNums));
 
   generateQuestionsDoc(combinedQuesions, outputDocId)
 }
