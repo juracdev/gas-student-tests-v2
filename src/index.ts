@@ -6,6 +6,7 @@ import { parseDocumentAnswers } from './parsing/parseDocumentAnswers';
 import { parseDocumentQuestions } from './parsing/parseDocumentQuestions';
 import { parseQuestionSheet } from './parsing/parseQuestionSheet';
 import { generateQuestionsDoc } from './quest-doc-generation/generateQuestionsDoc';
+import { generateNoCheckReport } from './report-generation/generateNoCheckReport';
 import { generateQuestionsSheet } from './test-generation/generateQuestionsSheet';
 import { generateTestForm } from './test-generation/generateTestForm';
 
@@ -77,4 +78,8 @@ function createQuestionsDoc(docIds: string[], outputDocId: string) {
  console.log(JSON.stringify(groupsNums));
 
   generateQuestionsDoc(combinedQuesions, outputDocId)
+}
+
+function createNoCheckReport() {
+  generateNoCheckReport();
 }

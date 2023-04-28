@@ -13,6 +13,8 @@ export function parseDocumentAnswers(body: GoogleAppsScript.Document.Body, quest
     const rightAnswer = { number: i + numRows, text: row.getCell(4).getText().trim() };
 
     [leftAnswer, rightAnswer].forEach((ans) => {
+      if (ans.number > questions.length) return;
+
       const quesion = questions.find((x) => x.number === ans.number);
       console.log(JSON.stringify(ans));
 
