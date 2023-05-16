@@ -9,6 +9,11 @@ import { generateQuestionsDoc } from './quest-doc-generation/generateQuestionsDo
 import { generateNoCheckReport } from './report-generation/generateNoCheckReport';
 import { generateQuestionsSheet } from './test-generation/generateQuestionsSheet';
 import { generateTestForm } from './test-generation/generateTestForm';
+import {
+  UniqueQuestsOptions,
+  createUniqueQuestDocs,
+  writeQuestionGroupsData,
+} from './quest-doc-generation/createUniqueQuestDocs';
 
 function main() {}
 
@@ -59,9 +64,8 @@ function createQuestionsDoc(docIds: string[], outputDocId: string) {
     combinedQuesions.push(...questions);
   });
 
-  combinedQuesions = combinedQuesions.map((q, idx) => ({ ...q, groupQuestNum: idx + 1 }));
-
   combinedQuesions = combinedQuesions.sort(() => Math.random() - 0.5);
+  combinedQuesions = combinedQuesions.map((q, idx) => ({ ...q, groupQuestNum: idx + 1 }));
 
   const groupsNums: number[][] = [];
 
@@ -69,17 +73,27 @@ function createQuestionsDoc(docIds: string[], outputDocId: string) {
     groupsNums.push([]);
   }
 
-  combinedQuesions.forEach(quest => {
+  combinedQuesions.forEach((quest) => {
     const grIdx = quest.groupIdx!;
     groupsNums[grIdx].push(quest.groupQuestNum!);
     console.log(quest);
   });
 
- console.log(JSON.stringify(groupsNums));
+  console.log(JSON.stringify(groupsNums));
 
-  generateQuestionsDoc(combinedQuesions, outputDocId)
+  generateQuestionsDoc(combinedQuesions, outputDocId);
 }
 
 function createNoCheckReport() {
   generateNoCheckReport();
+}
+
+/*  UNIQUE DOCS */
+
+function writeUniqueQuestsData() {
+  writeQuestionGroupsData();
+}
+
+function createUniqueDocs(options: UniqueQuestsOptions) {
+  createUniqueQuestDocs(options);
 }

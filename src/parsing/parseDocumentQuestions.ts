@@ -34,8 +34,6 @@ export function parseDocumentQuestions(body: GoogleAppsScript.Document.Body): Qu
 
     let sibling = el.getParent().getNextSibling();
 
-    console.log(`sibling ${JSON.stringify(sibling)} qtext ${qtext} qNumber ${qNumber}`)
-
     let siblText = sibling.asText().getText();
     const question: Question = {
       number: qNumber,
